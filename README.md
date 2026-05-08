@@ -4,8 +4,7 @@ A Spring Boot microservice that powers a travel loyalty rewards system: users ea
 travel bookings (flights, hotels, cruises, car rentals, activities), redeem them for rewards,
 and view their balance and full transaction history.
 
-Built as a focused study of the kind of microservice that backs a travel-loyalty platform
-like [arrivia](https://www.arrivia.com).
+Built as a focused study of the kind of microservice that backs a travel-loyalty platform.
 
 ## Stack
 
