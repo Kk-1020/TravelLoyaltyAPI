@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: loyalty-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpw
+      MYSQL_DATABASE: loyalty
+      MYSQL_USER: loyalty
+      MYSQL_PASSWORD: loyalty
+    ports:
+      - "3306:3306"
+    volumes:
+      - loyalty-mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uloyalty", "-ployalty"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  api:
+    build: .
+    container_name: loyalty-api
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/loyalty?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: loyalty
+      SPRING_DATASOURCE_PASSWORD: loyalty
+    ports:
+      - "8080:8080"
+
+volumes:
+  loyalty-mysql-data:
